@@ -39,6 +39,8 @@ public class PatientEntity {
 
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
 	private List<VisitEntity> visits;
+	@Column(name = "REGISTRATION_DATE", nullable = false)
+	private LocalDate registrationDate;
 	public Long getId() {
 		return id;
 	}

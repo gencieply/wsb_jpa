@@ -14,6 +14,7 @@ public class DoctorEntity {
 	@Column(name = "ID")
 	private Long id;
 
+
 	@Column(name = "FIRST_NAME", nullable = false, length = 50)
 	private String firstName;
 
