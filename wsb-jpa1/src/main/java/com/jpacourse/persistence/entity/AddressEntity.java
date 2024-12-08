@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "ADDRESS")
 public class AddressEntity {
 
-
+	// Jest powiązana relacją OneToOne z DoctorEntity i PatientEntity.
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")

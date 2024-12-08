@@ -1,3 +1,12 @@
+/*Tabela address:
+    Wypełniamy najpierw, ponieważ Doctor i Patient odnoszą się do adresu przez klucz obcy address_id.
+Tabela doctor i patient:
+    Każdy doktor i pacjent musi mieć unikalny adres (address_id).
+Tabela visit:
+    Wymaga wcześniej dodanych danych w tabelach doctor i patient.
+Tabela medical_treatment:
+    Wymaga wcześniejszego dodania wizyty w tabeli visit.
+*/
 INSERT INTO address (id, address_line1, address_line2, city, postal_code)
     VALUES
         (1, '123 Main St', 'Apt 4B', 'New York', '10001'),

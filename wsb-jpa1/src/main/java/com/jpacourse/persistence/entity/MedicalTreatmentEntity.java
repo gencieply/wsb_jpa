@@ -19,7 +19,7 @@ public class MedicalTreatmentEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false)
 	private TreatmentType type;
-
+	//Powiązanie ManyToOne z VisitEntity.
 	@ManyToOne
 	@JoinColumn(name = "VISIT_ID", nullable = false)
 	private VisitEntity visit;

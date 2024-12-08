@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "PATIENT")
 public class PatientEntity {
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
@@ -32,13 +31,32 @@ public class PatientEntity {
 
 	@Column(name = "DATE_OF_BIRTH", nullable = false)
 	private LocalDate dateOfBirth;
-
+	//Powiązanie OneToOne z AddressEntity i OneToMany z VisitEntity,iązanie OneToOne z AddressEntity i OneToMany z VisitEntity.
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
 	private AddressEntity address;
 
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
+
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
 	private List<VisitEntity> visits;
+
+
+
 	@Column(name = "REGISTRATION_DATE", nullable = false)
 	private LocalDate registrationDate;
 	public Long getId() {
@@ -96,5 +114,11 @@ public class PatientEntity {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+	public LocalDate getRegistrationDate() {
+		return registrationDate;
+	}
 
+	public void setRegistrationDate(LocalDate registrationDate) {
+		this.registrationDate = registrationDate;
+	}
 }
