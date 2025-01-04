@@ -1,5 +1,4 @@
 package com.jpacourse.persistance.dao;
-
 import com.jpacourse.persistence.dao.AddressDao;
 import com.jpacourse.persistence.entity.AddressEntity;
 import org.junit.Test;
