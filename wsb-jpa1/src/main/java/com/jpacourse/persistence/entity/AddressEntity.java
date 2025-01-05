@@ -12,14 +12,14 @@ public class AddressEntity {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "CITY", nullable = false, length = 100)
-	private String city;
-
-	@Column(name = "ADDRESS_LINE_1", nullable = false, length = 150)
+	@Column(name = "ADDRESS_LINE1", nullable = false, length = 150)
 	private String addressLine1;
 
-	@Column(name = "ADDRESS_LINE_2", length = 150)
+	@Column(name = "ADDRESS_LINE2", length = 150)
 	private String addressLine2;
+
+	@Column(name = "CITY", nullable = false, length = 100)
+	private String city;
 
 	@Column(name = "POSTAL_CODE", nullable = false, length = 20)
 	private String postalCode;

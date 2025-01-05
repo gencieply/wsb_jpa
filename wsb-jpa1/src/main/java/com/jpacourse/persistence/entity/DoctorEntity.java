@@ -33,6 +33,15 @@ public class DoctorEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "SPECIALIZATION", nullable = false)
 	private Specialization specialization;
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
 	//Powiązanie OneToOne z AddressEntity i ManyToOne z VisitEntity.
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")

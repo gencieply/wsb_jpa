@@ -1,5 +1,8 @@
 package com.jpacourse.service;
+
 import com.jpacourse.dto.PatientTO;
+import com.jpacourse.persistence.dao.AddressRepository;
+import com.jpacourse.persistence.dao.DoctorRepository;
 import com.jpacourse.persistence.dao.PatientRepository;
 import com.jpacourse.persistence.dao.VisitRepository;
 import com.jpacourse.persistence.entity.AddressEntity;
@@ -25,6 +28,12 @@ public class PatientServiceIntegrationTest {
     private PatientService patientService;
 
     @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
     private PatientRepository patientRepository;
 
     @Autowired
@@ -33,32 +42,46 @@ public class PatientServiceIntegrationTest {
     @Test
     public void testGetPatientById_ShouldReturnPatientTO() {
         // given
-        AddressEntity address = new AddressEntity();
-        address.setAddressLine1("123 Main St");
-        address.setCity("New York");
-        address.setPostalCode("10001");
+        AddressEntity patientAddress = new AddressEntity();
+        patientAddress.setAddressLine1("123 Main St");
+        patientAddress.setCity("New York");
+        patientAddress.setPostalCode("10001");
+        addressRepository.save(patientAddress);
+
+        AddressEntity doctorAddress = new AddressEntity();
+        doctorAddress.setAddressLine1("456 Elm St");
+        doctorAddress.setCity("Los Angeles");
+        doctorAddress.setPostalCode("90001");
+        addressRepository.save(doctorAddress);
 
         DoctorEntity doctor = new DoctorEntity();
         doctor.setFirstName("John");
         doctor.setLastName("Doe");
         doctor.setTelephoneNumber("555-1234");
+        doctor.setEmail("john.doe@example.com");
+        doctor.setDoctorNumber("D004");
         doctor.setSpecialization(Specialization.SURGEON);
+        doctor.setAddress(doctorAddress);
+        doctorRepository.save(doctor);
 
         PatientEntity patient = new PatientEntity();
         patient.setFirstName("Alice");
         patient.setLastName("Smith");
+        patient.setPatientNumber("P003");
+        patient.setTelephoneNumber("555-9876");
         patient.setDateOfBirth(LocalDate.of(1990, 3, 25));
         patient.setRegistrationDate(LocalDate.of(2023, 1, 15));
-        patient.setAddress(address);
+        patient.setAddress(patientAddress);
+        patientRepository.save(patient);
+        patientRepository.flush();
 
         VisitEntity visit = new VisitEntity();
         visit.setDescription("Routine checkup");
         visit.setTime(LocalDateTime.of(2024, 12, 5, 10, 0));
         visit.setDoctor(doctor);
         visit.setPatient(patient);
-
-        patientRepository.save(patient);
         visitRepository.save(visit);
+        visitRepository.flush();
 
         // when
         PatientTO patientTO = patientService.getPatientById(patient.getId());
@@ -74,11 +97,20 @@ public class PatientServiceIntegrationTest {
     @Test
     public void testDeletePatient_ShouldCascadeRemoveVisits() {
         // given
+        AddressEntity patientAddress = new AddressEntity();
+        patientAddress.setAddressLine1("123 Oak St");
+        patientAddress.setCity("Chicago");
+        patientAddress.setPostalCode("60601");
+        addressRepository.save(patientAddress);
+
         PatientEntity patient = new PatientEntity();
         patient.setFirstName("Bob");
         patient.setLastName("Johnson");
+        patient.setPatientNumber("P002");
+        patient.setTelephoneNumber("999-999-200");
         patient.setDateOfBirth(LocalDate.of(1985, 6, 10));
         patient.setRegistrationDate(LocalDate.of(2023, 2, 20));
+        patient.setAddress(patientAddress);
         patientRepository.save(patient);
 
         VisitEntity visit = new VisitEntity();
