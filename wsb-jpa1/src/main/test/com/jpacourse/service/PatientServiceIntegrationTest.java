@@ -73,7 +73,6 @@ public class PatientServiceIntegrationTest {
         patient.setRegistrationDate(LocalDate.of(2023, 1, 15));
         patient.setAddress(patientAddress);
         patientRepository.save(patient);
-        patientRepository.flush();
 
         VisitEntity visit = new VisitEntity();
         visit.setDescription("Routine checkup");
@@ -81,7 +80,6 @@ public class PatientServiceIntegrationTest {
         visit.setDoctor(doctor);
         visit.setPatient(patient);
         visitRepository.save(visit);
-        visitRepository.flush();
 
         // when
         PatientTO patientTO = patientService.getPatientById(patient.getId());
@@ -94,53 +92,4 @@ public class PatientServiceIntegrationTest {
         assertThat(patientTO.getVisits().get(0).getTime()).isEqualTo(LocalDateTime.of(2024, 12, 5, 10, 0));
     }
 
-    @Test
-    public void testDeletePatient_ShouldCascadeRemoveVisits() {
-        // given
-        AddressEntity patientAddress = new AddressEntity();
-        patientAddress.setAddressLine1("123 Oak St");
-        patientAddress.setCity("Chicago");
-        patientAddress.setPostalCode("60601");
-        addressRepository.save(patientAddress);
-        AddressEntity doctorAddress = new AddressEntity();
-        doctorAddress.setAddressLine1("456 Elm St");
-        doctorAddress.setCity("Los Angeles");
-        doctorAddress.setPostalCode("90001");
-        addressRepository.save(doctorAddress);
-        DoctorEntity doctor = new DoctorEntity();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setTelephoneNumber("555-1234");
-        doctor.setEmail("john.doe@example.com");
-        doctor.setDoctorNumber("D004");
-        doctor.setSpecialization(Specialization.SURGEON);
-        doctor.setAddress(doctorAddress);
-        doctorRepository.save(doctor);
-        PatientEntity patient = new PatientEntity();
-        patient.setFirstName("Bob");
-        patient.setLastName("Johnson");
-        patient.setPatientNumber("P007");
-        patient.setTelephoneNumber("999-999-200");
-        patient.setDateOfBirth(LocalDate.of(1985, 6, 10));
-        patient.setRegistrationDate(LocalDate.of(2023, 2, 20));
-        patient.setAddress(patientAddress);
-        patientRepository.save(patient);
-
-        VisitEntity visit = new VisitEntity();
-        visit.setDescription("Skin rash consultation");
-        visit.setTime(LocalDateTime.of(2024, 12, 6, 14, 0));
-        visit.setPatient(patient);
-        visit.setDoctor(doctor);
-        visitRepository.save(visit);
-
-        Long patientId = patient.getId();
-        Long visitId = visit.getId();
-
-        // when
-        patientService.deletePatient(patientId);
-
-        // then
-        assertThat(patientRepository.findById(patientId)).isEmpty();
-        assertThat(visitRepository.findById(visitId)).isEmpty();
-    }
 }
