@@ -102,11 +102,24 @@ public class PatientServiceIntegrationTest {
         patientAddress.setCity("Chicago");
         patientAddress.setPostalCode("60601");
         addressRepository.save(patientAddress);
-
+        AddressEntity doctorAddress = new AddressEntity();
+        doctorAddress.setAddressLine1("456 Elm St");
+        doctorAddress.setCity("Los Angeles");
+        doctorAddress.setPostalCode("90001");
+        addressRepository.save(doctorAddress);
+        DoctorEntity doctor = new DoctorEntity();
+        doctor.setFirstName("John");
+        doctor.setLastName("Doe");
+        doctor.setTelephoneNumber("555-1234");
+        doctor.setEmail("john.doe@example.com");
+        doctor.setDoctorNumber("D004");
+        doctor.setSpecialization(Specialization.SURGEON);
+        doctor.setAddress(doctorAddress);
+        doctorRepository.save(doctor);
         PatientEntity patient = new PatientEntity();
         patient.setFirstName("Bob");
         patient.setLastName("Johnson");
-        patient.setPatientNumber("P002");
+        patient.setPatientNumber("P007");
         patient.setTelephoneNumber("999-999-200");
         patient.setDateOfBirth(LocalDate.of(1985, 6, 10));
         patient.setRegistrationDate(LocalDate.of(2023, 2, 20));
@@ -117,6 +130,7 @@ public class PatientServiceIntegrationTest {
         visit.setDescription("Skin rash consultation");
         visit.setTime(LocalDateTime.of(2024, 12, 6, 14, 0));
         visit.setPatient(patient);
+        visit.setDoctor(doctor);
         visitRepository.save(visit);
 
         Long patientId = patient.getId();
