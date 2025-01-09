@@ -17,6 +17,10 @@ import com.jpacourse.persistence.dao.AddressRepository;
 import com.jpacourse.persistence.dao.DoctorRepository;
 import com.jpacourse.persistence.dao.PatientRepository;
 import com.jpacourse.persistence.dao.VisitRepository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -37,7 +41,6 @@ public class PatientServiceTest {
 
     @Autowired
     private VisitRepository visitRepository;
-
 
     @Test
     public void testGetVisitsByPatientId() {

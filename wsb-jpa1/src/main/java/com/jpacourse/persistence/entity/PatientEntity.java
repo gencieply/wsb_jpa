@@ -1,6 +1,7 @@
 package com.jpacourse.persistence.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -31,7 +32,11 @@ public class PatientEntity {
 
 	@Column(name = "DATE_OF_BIRTH", nullable = false)
 	private LocalDate dateOfBirth;
-	//Powiązanie OneToOne z AddressEntity i OneToMany z VisitEntity,iązanie OneToOne z AddressEntity i OneToMany z VisitEntity.
+
+	@Version
+	@Column(name = "VERSION")
+	private Integer version;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
 	private AddressEntity address;
@@ -52,10 +57,14 @@ public class PatientEntity {
 		this.visits = visits;
 	}
 
-	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-	private List<VisitEntity> visits;
-
-
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<VisitEntity> visits = new ArrayList<>();
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 
 	@Column(name = "REGISTRATION_DATE", nullable = false)
 	private LocalDate registrationDate;

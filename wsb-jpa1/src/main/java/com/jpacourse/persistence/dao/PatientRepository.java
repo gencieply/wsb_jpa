@@ -23,7 +23,7 @@ public class PatientRepository {
                 .getResultList();
     }
 
-    public List<PatientEntity> findPatientsWithMoreThanXVisits(int visitCount) {
+    public List<PatientEntity> findPatientsWithMoreThanXVisits(Long visitCount) {
         return entityManager.createQuery(
                         "SELECT p FROM PatientEntity p " +
                                 "JOIN p.visits v " +

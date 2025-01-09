@@ -20,7 +20,9 @@ VALUES
 INSERT INTO visit (id, description, time, doctor_id, patient_id)
 VALUES
     (1, 'Routine checkup', '2024-12-05 10:00:00', 1, 1),
-    (2, 'Skin rash consultation', '2024-12-06 14:00:00', 2, 2);
+    (2, 'Skin rash consultation', '2024-12-06 14:00:00', 2, 2),
+    (3, 'Routine checkup', '2024-12-05 10:00:00', 1, 1);
+
 
 -- Wypełnianie tabeli MedicalTreatment
 INSERT INTO medical_treatment (id, description, type, visit_id)

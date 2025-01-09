@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "VISIT")
 public class VisitEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
@@ -19,30 +20,6 @@ public class VisitEntity {
 	@Column(name = "TIME", nullable = false)
 	private LocalDateTime time;
 
-	public DoctorEntity getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(DoctorEntity doctor) {
-		this.doctor = doctor;
-	}
-
-	public PatientEntity getPatient() {
-		return patient;
-	}
-
-	public void setPatient(PatientEntity patient) {
-		this.patient = patient;
-	}
-
-	public List<MedicalTreatmentEntity> getTreatments() {
-		return treatments;
-	}
-
-	public void setTreatments(List<MedicalTreatmentEntity> treatments) {
-		this.treatments = treatments;
-	}
-	//Powiązanie ManyToOne z DoctorEntity i PatientEntity oraz OneToMany z MedicalTreatmentEntity
 	@ManyToOne
 	@JoinColumn(name = "DOCTOR_ID", nullable = false)
 	private DoctorEntity doctor;
@@ -51,9 +28,10 @@ public class VisitEntity {
 	@JoinColumn(name = "PATIENT_ID", nullable = false)
 	private PatientEntity patient;
 
-	@OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "visit", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<MedicalTreatmentEntity> treatments;
 
+	// Gettery i settery
 	public Long getId() {
 		return id;
 	}
@@ -78,4 +56,27 @@ public class VisitEntity {
 		this.time = time;
 	}
 
+	public DoctorEntity getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
+
+	public PatientEntity getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
+	}
+
+	public List<MedicalTreatmentEntity> getTreatments() {
+		return treatments;
+	}
+
+	public void setTreatments(List<MedicalTreatmentEntity> treatments) {
+		this.treatments = treatments;
+	}
 }

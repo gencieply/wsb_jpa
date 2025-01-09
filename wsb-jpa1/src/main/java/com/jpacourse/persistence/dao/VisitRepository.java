@@ -21,11 +21,12 @@ public class VisitRepository {
                 .setParameter("patientId", patientId)
                 .getResultList();
     }
-    public void save(VisitEntity visit) {
+    public VisitEntity save(VisitEntity visit) {
         if (visit.getId() == null) {
             entityManager.persist(visit);
+            return visit;
         } else {
-            entityManager.merge(visit);
+            return entityManager.merge(visit);
         }
     }
 }
