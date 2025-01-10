@@ -46,7 +46,9 @@ public class DoctorEntity {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
 	private AddressEntity address;
-
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private List<VisitEntity> visits;
 
@@ -105,5 +107,11 @@ public class DoctorEntity {
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
 	}
+	public Long getVersion() {
+		return version;
+	}
 
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 }
